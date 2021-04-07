@@ -1,0 +1,16 @@
+
+header{
+    background-color: #4E2B2B;
+}
+a.navItem{
+    color: rgb(86, 221, 7);
+    font-size: 35px;
+    padding: 0px 15px 0px 15px;
+}
+
+.flex-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}

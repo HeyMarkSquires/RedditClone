@@ -1,0 +1,7 @@
+<header>
+    <nav class="flex-container">
+        <a class="navItem" href="/home">Home</a>
+        <a class="navItem" href="/dashboard" *ngIf="authService.userState as user">Dashboard</a>
+        <a class="navItem" href="/sign-in" *ngIf="!authService.userState as user">Sign in</a>
+    </nav>
+</header>

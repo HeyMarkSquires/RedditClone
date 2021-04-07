@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+
+        </div>
+        <div class="col-sm">
+            <div class="form-group">
+                Title: 
+                <input class="form-control" type="text" [formControl]="postTitleControl">
+            </div>
+            <div class="form-group">
+                Content: 
+                <input class="form-control" type="text" [formControl]="postContentControl">
+            </div>
+            <button class="btn btn-primary" (click)="createPost()">Submit</button>
+        </div>
+        <div class="col-sm">
+
+        </div>
+    </div>
+    
+</div>
+

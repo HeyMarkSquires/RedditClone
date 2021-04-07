@@ -1,0 +1,37 @@
+<div class="signUpForm">
+  <div class="displayTable">
+      <div class="displayTableCell">
+            <div class="authBlock">
+              <h3 class="signInItem">Sign In</h3>
+              <div class="formGroup signInItem">
+                <input type="text" class="form-control" placeholder="Username" #userName required>
+              </div>
+        
+              <div class="formGroup signInItem">
+                <input type="password" class="form-control" placeholder="Password" #userPassword required>
+              </div>
+        
+              <div class="formGroup signInItem">
+                <input type="button" class="btn btn-primary btn-block" value="Sign in"
+                  (click)="authService.SignIn(userName.value, userPassword.value)">
+              </div>
+        
+              <div class="formGroup signInItem">
+                <button type="button" class="btn btn-danger btn-block" (click)="authService.GoogleAuth()">
+                  
+                <span><fa-icon [icon]="faGoogle"></fa-icon></span>Log in with Google
+                </button>
+              </div>
+        
+              <div class="forgotPassword signInItem">
+                <span routerLink="/forgot-password">Forgot Password</span>
+              </div>
+            </div>
+        
+            <div class="redirectToLogin signInItem">
+              <span class="redirect" routerLink="/sign-up"> Register</span>
+            </div>
+      </div>
+    </div>
+
+</div>

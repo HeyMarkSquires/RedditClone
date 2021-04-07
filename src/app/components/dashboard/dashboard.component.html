@@ -1,0 +1,19 @@
+<div class="container mt-5" *ngIf="authService.userState as user" style="max-width: 600px">
+
+    <div class="row">
+      <div class="media">
+        <img class="align-self-start mr-5 img-thumbnail rounded-circle"
+          src="{{(user.photoURL) ? user.photoURL : '/assets/dummy.jpg'}}" alt="{{user.displayName}}">
+        <div class="media-body">
+          <h2>Hi: <strong>{{(user.displayName) ? user.displayName : 'User'}}</strong></h2>
+          <p>User ID: <strong>{{user.uid}}</strong></p>
+          <p>Email: <strong>{{user.email}}</strong></p>
+        </div>
+      </div>
+    </div>
+ 
+    <a href="sign-in" class="btn btn-block btn-primary" (click)="authService.SignOut()">
+      Sign Out
+    </a>
+ 
+  </div>
