@@ -49,4 +49,8 @@ export class PostService {
     const posts = this.postCollection.valueChanges();
     return posts;
   }
+
+  DeletePostById(id: string){
+    this.postCollection.doc(`${id}`).delete();
+  }
 }

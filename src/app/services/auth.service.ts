@@ -48,6 +48,13 @@ export class AuthService {
           window.alert(error.message)
         })
     }
+
+    GetLoggedInUserId(){
+      var id: User;
+      id=JSON.parse(localStorage.getItem('user') || '{}');
+      console.log(id.uid);
+      return id.uid;
+    }
   
     SignUp(email: string, password: string) {
       return this.afAuth.createUserWithEmailAndPassword(email, password)

@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Post } from 'src/app/post.model';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService, User } from 'src/app/services/auth.service';
 import { PostService } from 'src/app/services/post.service';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -16,13 +17,14 @@ export class HomeComponent implements OnInit {
   postTitleControl = new FormControl('');
   postContentControl = new FormControl('');
   posts: Post[] = [];
-
+  faTimes = faTimes;
+  id: string = "";
   constructor(public postService: PostService, public authService: AuthService) { }
 
   ngOnInit(): void {
+    this.id=this.authService.GetLoggedInUserId()
     this.postService.GetPostList().subscribe(
       (posts) =>{
-        console.log(posts);
         this.posts = posts;
       }
     );
@@ -37,6 +39,10 @@ export class HomeComponent implements OnInit {
       content: this.postContentControl.value
     }
     this.postService.CreatePost(post);
+  }
+
+  deletePost(uid: string){
+    this.postService.DeletePostById(uid);
   }
 
 }
