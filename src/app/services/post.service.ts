@@ -1,7 +1,8 @@
 import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Post } from '../post.model';
 import { AuthService } from './auth.service';
 
@@ -12,12 +13,18 @@ import { AuthService } from './auth.service';
 })
 export class PostService {
 
+  private postCollection: AngularFirestoreCollection<Post>;
+
   constructor(
     public afs: AngularFirestore,
     public afAuth: AngularFireAuth,
     public router: Router,
     public ngZone: NgZone
-  ) { }
+  ) { 
+    
+    this.postCollection = afs.collection('posts');
+
+  }
 
   CreatePost(post: Post){
     post.uid = this.afs.createId();
@@ -35,5 +42,10 @@ export class PostService {
         merge: true
       })
     });
+  }
+
+  GetPostList(){
+    const posts = this.postCollection.valueChanges();
+    return posts;
   }
 }
