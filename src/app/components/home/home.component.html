@@ -1,9 +1,9 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col">
 
         </div>
-        <div class="col-md-6">
+        <div class="col-6">
             <div *ngIf="authService.userState as user">
                 <div class="form-group">
                     Title: 
@@ -18,25 +18,11 @@
             </div>
             <div class="posts">
                 <div *ngFor="let post of posts">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-8">
-                                <h3>{{post.title}}</h3>     
-                            </div>
-                            <div *ngIf="post.posteruid==id" class="col-sm-4" style="text-align: center;">
-                                <fa-icon [icon]="faTimes" class="deleteIcon" (click)="deletePost(post.uid)"></fa-icon>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-8">
-                                <p>{{post.content}}</p> 
-                            </div>
-                        </div>
-                    </div>
+                    <app-post-item [post]="post"></app-post-item>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col">
 
         </div>
     </div>

@@ -44,13 +44,18 @@ export class PostService {
       })
     });
   }
-
+  
+  
   GetPostList(){
     const posts = this.postCollection.valueChanges();
     return posts;
   }
+  
+  UpdatePost(post: Post){
+    this.postCollection.doc(`${post.uid}`).update(post);
+  }
 
-  DeletePostById(id: string){
+  DeletePostById(id: string | undefined){
     this.postCollection.doc(`${id}`).delete();
   }
 }

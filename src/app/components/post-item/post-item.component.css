@@ -1,0 +1,16 @@
+.icons:hover{
+    cursor: pointer;
+    color: red;
+}
+
+.container{
+    padding-top: 20px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.icons{
+    
+    padding: 5px;
+
+}

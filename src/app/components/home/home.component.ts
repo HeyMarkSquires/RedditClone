@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   constructor(public postService: PostService, public authService: AuthService) { }
 
   ngOnInit(): void {
-    this.id=this.authService.GetLoggedInUserId()
+    this.id=this.authService.GetLoggedInUserId();
     this.postService.GetPostList().subscribe(
       (posts) =>{
         this.posts = posts;
@@ -39,10 +39,7 @@ export class HomeComponent implements OnInit {
       content: this.postContentControl.value
     }
     this.postService.CreatePost(post);
+    this.postTitleControl = new FormControl('');
+    this.postContentControl = new FormControl('');
   }
-
-  deletePost(uid: string){
-    this.postService.DeletePostById(uid);
-  }
-
 }
