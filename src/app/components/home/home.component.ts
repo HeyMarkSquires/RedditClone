@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.postService.GetPostList().subscribe(
       (posts) =>{
+        console.log(posts);
         this.posts = posts;
       }
     );
@@ -31,6 +32,7 @@ export class HomeComponent implements OnInit {
     const post = {
       uid: '',
       posteruid: '',
+      timestamp: new Date,
       title: this.postTitleControl.value,
       content: this.postContentControl.value
     }

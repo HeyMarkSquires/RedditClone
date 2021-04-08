@@ -22,7 +22,7 @@ export class PostService {
     public ngZone: NgZone
   ) { 
     
-    this.postCollection = afs.collection('posts');
+    this.postCollection = afs.collection('posts', ref=>ref.orderBy('timestamp', 'desc'));
 
   }
 
@@ -31,10 +31,11 @@ export class PostService {
     this.afAuth.authState.subscribe( authState => {
       post.posteruid=authState?.uid;
       const postRef: AngularFirestoreDocument<any> = this.afs.doc(`posts/${post.uid}`);
-
+      
       const postState: Post = {
         uid: post.uid,
         posteruid: post.posteruid,
+        timestamp: post.timestamp,
         title: post.title,
         content: post.content,
       }
