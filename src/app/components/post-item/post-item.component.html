@@ -1,27 +1,31 @@
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h3>{{post.title}}</h3>     
-        </div>
-        <div class="col-3">
-            <div *ngIf="post.posteruid==id" style="text-align: center;">
-                <fa-icon [icon]="faPen" class="icons" (click)="setEditMode()"></fa-icon>
-                <fa-icon [icon]="faTimes" class="icons" (click)="deletePost(post.uid)"></fa-icon>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-2 vertical-center">
+                        <div>
+                            <fa-icon [icon]="faArrowAltCircleUp" (click)="upvotePost()" class="icons upvote-button"></fa-icon>
+                            <p class="voteCount">{{post.upvoteCount}}</p> 
+                            <fa-icon [icon]="faArrowAltCircleDown" (click)="downvotePost()" class="icons"></fa-icon>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h3>{{post.title}}</h3>     
+                        <p>{{post.content}}</p> 
+                    </div>
+                    <div class="col-3">
+                        <div *ngIf="post.posteruid==id" style="text-align: center;">
+                            <fa-icon [icon]="faPen" class="icons" (click)="setEditMode()"></fa-icon>
+                            <fa-icon [icon]="faTimes" class="icons" (click)="deletePost(post.uid)"></fa-icon>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="editMode">
+                    <div class="col-9">
+                        <div class="form-group">
+                            Content: 
+                            <input class="form-control" [formControl]="postContentControl" type="text">
+                        </div>
+                        <button class="btn btn-primary" (click)="updateContent()">Submit</button>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-9">
-            <p>{{post.content}}</p> 
-        </div>
-    </div>
-    <div class="row" *ngIf="editMode">
-        <div class="col-9">
-            <div class="form-group">
-                Content: 
-                <input class="form-control" [formControl]="postContentControl" type="text">
-            </div>
-            <button class="btn btn-primary" (click)="updateContent()">Submit</button>
-        </div>
-    </div>
-</div>

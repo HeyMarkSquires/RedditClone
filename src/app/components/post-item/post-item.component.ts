@@ -1,8 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Post } from 'src/app/post.model';
+import { Post } from 'src/app/models/post.model';
 import { PostService } from 'src/app/services/post.service';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleDown } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormControl } from '@angular/forms';
 
@@ -14,8 +16,11 @@ import { FormControl } from '@angular/forms';
 export class PostItemComponent implements OnInit {
   faTimes = faTimes;
   faPen = faPen;
+  faArrowAltCircleUp = faArrowAltCircleUp;
+  faArrowAltCircleDown = faArrowAltCircleDown;
   editMode = false;
   postContentControl = new FormControl('');
+  voteState = 66;
   id: string = "";
   @Input() post: Post;
   constructor(public postService: PostService, public authService: AuthService) { 
@@ -24,12 +29,15 @@ export class PostItemComponent implements OnInit {
       content: '',
       title: '',
       posteruid: '',
+      upvoteCount: 0,
       timestamp: new Date
     }
+    console.log(1);
   }
 
   ngOnInit(): void {
     this.id=this.authService.GetLoggedInUserId();
+    console.log(2);
   }
 
   setEditMode(){
@@ -41,9 +49,17 @@ export class PostItemComponent implements OnInit {
     this.postContentControl = new FormControl('');
     this.postService.UpdatePost(this.post);
     this.setEditMode();
-    
+  }
+
+  upvotePost(){
+    this.postService.VotePost(this.post, this.id, true);
+  }
+
+  downvotePost(){
+    this.postService.VotePost(this.post, this.id, false);
   }
   
+
   deletePost(uid: string | undefined){
     this.postService.DeletePostById(uid);
   }

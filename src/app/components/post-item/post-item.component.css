@@ -9,8 +9,12 @@
     padding-right: 0px;
 }
 
+.voteCount{
+    padding-left: 8px;
+    margin-bottom: 0px;
+}
+
 .icons{
-    
     padding: 5px;
 
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { Post } from 'src/app/post.model';
+import { Post } from 'src/app/models/post.model';
 import { AuthService, User } from 'src/app/services/auth.service';
 import { PostService } from 'src/app/services/post.service';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -36,7 +36,8 @@ export class HomeComponent implements OnInit {
       posteruid: '',
       timestamp: new Date,
       title: this.postTitleControl.value,
-      content: this.postContentControl.value
+      content: this.postContentControl.value,
+      upvoteCount: 0
     }
     this.postService.CreatePost(post);
     this.postTitleControl = new FormControl('');

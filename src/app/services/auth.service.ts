@@ -52,7 +52,6 @@ export class AuthService {
     GetLoggedInUserId(){
       var id: User;
       id=JSON.parse(localStorage.getItem('user') || '{}');
-      console.log(id.uid);
       return id.uid;
     }
   
