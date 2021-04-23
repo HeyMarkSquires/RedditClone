@@ -32,12 +32,10 @@ export class PostItemComponent implements OnInit {
       upvoteCount: 0,
       timestamp: new Date
     }
-    console.log(1);
   }
 
   ngOnInit(): void {
     this.id=this.authService.GetLoggedInUserId();
-    console.log(2);
   }
 
   setEditMode(){

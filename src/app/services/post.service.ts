@@ -104,12 +104,10 @@ export class PostService {
         }
         if (upvote===false){
           vote.upvoteState = 0;
-          console.log("Beep");
           post.upvoteCount--;
           this.postCollection.doc(`${post.uid}`).update(post);
         }
         else{
-          console.log("Boop");
           post.upvoteCount++;
           this.postCollection.doc(`${post.uid}`).update(post);
         }
@@ -125,7 +123,6 @@ export class PostService {
         if (upvote===true){
           //If the vote used to be a downvote, update it to an upvote and increment upvote count on post by 2
           if (myVote.upvoteState===0){
-            console.log(`Updating ${myVote.uid} from a downvote to an upvote`)
             myVote.upvoteState=1;
             this.upvoteCollection.doc(`${myVote.uid}`).update(myVote);
             post.upvoteCount+=2;
@@ -134,7 +131,6 @@ export class PostService {
           }
           //Deleting the vote if it is an upvote
           else if (myVote.upvoteState===1){
-            console.log(`Deleting upvote ${myVote.uid}`);
             this.upvoteCollection.doc(`${myVote.uid}`).delete();
             post.upvoteCount--;
             this.postCollection.doc(`${post.uid}`).update(post);
@@ -143,16 +139,21 @@ export class PostService {
         }
         //Updating a downvote
         else{
+          //If the vote used to be an upvote, update it to a downvote and decrement the upvote count on post by 2
           if (myVote.upvoteState===1){
             
             myVote.upvoteState=0;
             this.upvoteCollection.doc(`${myVote.uid}`).update(myVote);
+            post.upvoteCount-=2;
+            this.postCollection.doc(`${post.uid}`).update(post);
   
           }
           //Deleting the vote if it is an upvote
           else if (myVote.upvoteState===0){
             console.log(this.upvoteCollection);
             this.upvoteCollection.doc(`${myVote.uid}`).delete();
+            post.upvoteCount++;
+            this.postCollection.doc(`${post.uid}`).update(post);
   
           }
         }
