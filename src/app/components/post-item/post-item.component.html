@@ -3,6 +3,7 @@
                 <div class="row">
                     <div class="col-2 vertical-center">
                         <div>
+                            <div *ngIf=""></div>
                             <fa-icon [icon]="faArrowAltCircleUp" (click)="upvotePost()" class="icons upvote-button"></fa-icon>
                             <p class="voteCount">{{post.upvoteCount}}</p> 
                             <fa-icon [icon]="faArrowAltCircleDown" (click)="downvotePost()" class="icons"></fa-icon>

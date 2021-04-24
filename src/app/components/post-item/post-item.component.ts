@@ -7,6 +7,7 @@ import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { faArrowAltCircleDown } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormControl } from '@angular/forms';
+import { Vote } from 'src/app/models/vote.model';
 
 @Component({
   selector: 'app-post-item',
@@ -20,7 +21,7 @@ export class PostItemComponent implements OnInit {
   faArrowAltCircleDown = faArrowAltCircleDown;
   editMode = false;
   postContentControl = new FormControl('');
-  voteState = 66;
+  voteState = 0;
   id: string = "";
   @Input() post: Post;
   constructor(public postService: PostService, public authService: AuthService) { 
@@ -32,10 +33,11 @@ export class PostItemComponent implements OnInit {
       upvoteCount: 0,
       timestamp: new Date
     }
+    this.id=this.authService.GetLoggedInUserId();
   }
 
   ngOnInit(): void {
-    this.id=this.authService.GetLoggedInUserId();
+
   }
 
   setEditMode(){

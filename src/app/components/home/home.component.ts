@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit {
         this.posts = posts;
       }
     );
+    
   }
 
   createPost(){

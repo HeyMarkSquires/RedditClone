@@ -1,13 +1,10 @@
 import { ComponentFactoryResolver, Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentChangeAction, QuerySnapshot } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Post } from '../models/post.model';
 import { Vote } from '../models/vote.model';
-import { AuthService } from './auth.service';
-import { first } from 'rxjs/operators';
-import { getDefaultCompilerOptions } from 'typescript';
 
 
 @Injectable({
@@ -165,8 +162,9 @@ export class PostService {
     
   }
   
-  GetVoteState(post: Post, userid: string): number{
-    return 0;
+  GetVoteState(post: Post, userid: string): Observable<Vote[]>{
+    return this.afs.collection<Vote>(`votes`, ref=> ref.where('useruid', '==', userid).where("postuid", "==", post.uid))
+      .valueChanges();
   }
 
 
@@ -175,6 +173,38 @@ export class PostService {
   }
 
   DeletePostById(id: string | undefined){
+
+    
+    //Converter object to convert a firestore item into a vote
+    var voteConverter = {
+      toFirestore: function(vote: Vote) {
+          return {
+            uid: vote.uid,
+            postuid: vote.postuid,
+            upvoteState: vote.upvoteState,
+            useruid: vote.useruid,
+            timestamp: vote.timestamp,
+          };
+      },
+      fromFirestore: function(snapshot: { data: (arg0: any) => any; }, options: any){
+          const data = snapshot.data(options);
+          let myVote1: Vote = {
+            uid: data.uid,
+            postuid: data.postuid,
+            upvoteState: data.upvoteState,
+            useruid: data.useruid,
+            timestamp: data.timestamp,
+          }
+          return myVote1;
+      }
+    };
+
     this.postCollection.doc(`${id}`).delete();
+    let query = this.afs.firestore.collection(`votes`).withConverter(voteConverter).where('postuid', '==', id);
+    query.get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        doc.ref.delete();
+      });
+    });
   }
 }
