@@ -5,4 +5,5 @@ export interface Post {
     timestamp: Date;
     title: string;
     content: string;
+    uservotestate: string;
   }

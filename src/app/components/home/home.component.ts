@@ -38,7 +38,8 @@ export class HomeComponent implements OnInit {
       timestamp: new Date,
       title: this.postTitleControl.value,
       content: this.postContentControl.value,
-      upvoteCount: 0
+      upvoteCount: 0,
+      uservotestate: ''
     }
     this.postService.CreatePost(post);
     this.postTitleControl = new FormControl('');

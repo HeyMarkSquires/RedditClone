@@ -40,6 +40,7 @@ export class PostService {
         timestamp: post.timestamp,
         title: post.title,
         content: post.content,
+        uservotestate: post.uservotestate
       }
       return postRef.set(postState, {
         merge: true
@@ -162,9 +163,33 @@ export class PostService {
     
   }
   
-  GetVoteState(post: Post, userid: string): Observable<Vote[]>{
-    return this.afs.collection<Vote>(`votes`, ref=> ref.where('useruid', '==', userid).where("postuid", "==", post.uid))
-      .valueChanges();
+  GetVoteState(post: Post, userid: string){
+    //Converter object to convert a firestore item into a vote
+    console.log("Call");
+    var voteConverter = {
+      toFirestore: function(vote: Vote) {
+          return {
+            uid: vote.uid,
+            postuid: vote.postuid,
+            upvoteState: vote.upvoteState,
+            useruid: vote.useruid,
+            timestamp: vote.timestamp,
+          };
+      },
+      fromFirestore: function(snapshot: { data: (arg0: any) => any; }, options: any){
+          const data = snapshot.data(options);
+          let myVote1: Vote = {
+            uid: data.uid,
+            postuid: data.postuid,
+            upvoteState: data.upvoteState,
+            useruid: data.useruid,
+            timestamp: data.timestamp,
+          }
+          return myVote1;
+      }
+    };
+    //Scan the database to see if this user has already made an upvote on this post
+    return  this.afs.firestore.collection(`votes`).withConverter(voteConverter).where('useruid', '==', userid).where('postuid', '==', post.uid);
   }
 
 

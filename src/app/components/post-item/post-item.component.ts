@@ -31,13 +31,33 @@ export class PostItemComponent implements OnInit {
       title: '',
       posteruid: '',
       upvoteCount: 0,
-      timestamp: new Date
+      timestamp: new Date,
+      uservotestate: ''
     }
     this.id=this.authService.GetLoggedInUserId();
   }
 
   ngOnInit(): void {
-
+    this.postService.GetVoteState(this.post, this.id).get().then((querySnapshot) => { 
+          let size = querySnapshot.size;
+          if (size = 0){
+            this.voteState = 0
+          }
+          else{
+            querySnapshot.forEach((doc) => { 
+              let v = doc.data().upvoteState;
+              //If the vote is an upvote
+              if (v === 1){
+                this.voteState = 1;
+              }
+              //If the vote is a downvote
+              else{
+                this.voteState = 2;
+              }
+            });
+          }
+          console.log("Post "+this.post.uid+": "+this.voteState);
+    });;
   }
 
   setEditMode(){
